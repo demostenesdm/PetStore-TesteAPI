@@ -42,7 +42,7 @@ public class Pet {
         String petId = "9874563210";
         String token =
         given()
-                .contentType("application/jason")
+                .contentType("application/json")
                 .log().all()
         .when()
                 .get(uri + "/" + petId)
@@ -74,6 +74,23 @@ public class Pet {
                 .body("status", is("sold"))
         ;
 
+    }
+    @Test(priority = 4)
+    public void deletarPet(){
+        String petId = "9874563210";
+
+        given()
+                .contentType("application/json")
+                .log().all()
+        .when()
+                .delete(uri + "/" + "9874563210")
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("code", is(200))
+                .body("type", is("unknown"))
+                .body("message", is(petId))
+        ;
     }
 
 }

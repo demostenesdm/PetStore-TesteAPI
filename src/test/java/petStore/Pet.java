@@ -7,9 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
 
 public class Pet {
-    String uri = "petstore.swagger.io/v2/pet";
+    String uri = "https://petstore.swagger.io/v2/pet";
 
 
     public String lerJason(String caminhoJson) throws IOException {
@@ -24,11 +26,15 @@ public class Pet {
                 .contentType("application/json")
                 .log().all()
                 .body(jsonBody)
-                .when()
+        .when()
                 .post(uri)
-                .then()
+        .then()
                 .log().all()
                 .statusCode(200)
+                .body("name", is("Toff"))
+                .body("status", is("available"))
+                .body("category.name", is("dog"))
+                .body("tags.name", contains("sta"))
         ;
     }
 
